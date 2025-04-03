@@ -16,7 +16,8 @@
   min-height: 100vh;
   display: block;
   width: 90vw;
-  flex-direction: column;
+  overflow-x: hidden;
+ // flex-direction: column;
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
   color: #333;
