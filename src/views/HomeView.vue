@@ -17,11 +17,15 @@
         <p>Наша компания специализируется на написании дипломных работ для студентов различных вузов.
            Мы работаем с 2010 года и за это время помогли более чем 5000 студентов защитить свои дипломы
             на отлично. Наши авторы - это преподаватели вузов, кандидаты и доктора наук, которые
+             знают все требования к оформлению и содержанию дипломных работ.
+            Наша компания специализируется на написании дипломных работ для студентов различных вузов.
+           Мы работаем с 2010 года и за это время помогли более чем 5000 студентов защитить свои дипломы
+            на отлично. Наши авторы - это преподаватели вузов, кандидаты и доктора наук, которые
              знают все требования к оформлению и содержанию дипломных работ.</p>
       </div>
     </section>
 
-    <!-- 3. Блок с кнопкой, списком и лого -->
+    <!-- 3. Блок с кнопкой, списком и лого
     <section :class="$style.actionBlock">
       <div :class="$style.container">
         <div :class="$style.actionContent">
@@ -43,7 +47,35 @@
         </div>
       </div>
     </section>
+-->
+<section :class="$style.actionBlock">
+    <div :class="$style.actionContainer">
+      <!-- 1. Кнопка -->
+      <button :class="$style.actionButton" @click="openModal">
+        Заказать диплом
+      </button>
 
+      <!-- 2. Нумерованный список -->
+      <div :class="$style.listContainer">
+        <ol :class="$style.numberedList">
+          <li>Вы оставляете заявку с требованиями к работе</li>
+          <li>Мы подбираем подходящего автора-эксперта</li>
+          <li>Вы вносите предоплату 30% от суммы</li>
+          <li>Автор выполняет работу в указанный срок</li>
+          <li>Вы проверяете и оплачиваете оставшуюся сумму</li>
+        </ol>
+      </div>
+
+      <!-- 3. Логотип -->
+      <div :class="$style.logoWrapper">
+        <img
+          src="@/assets/images/logo.png"
+          alt="Логотип компании"
+          :class="$style.logoImage"
+        >
+      </div>
+    </div>
+  </section>
 <!-- 4. Заголовок -->
 <h2 :class="$style.sectionTitle">Примеры наших работ</h2>
 
@@ -145,7 +177,94 @@ showModal.value = false
   }
 }
 
-/* 3. Адаптивность */
+/* 3. Блок с кнопкой */
+.actionBlock {
+  width: 100%;
+  padding: 60px 0;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.actionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 40px;
+  gap: 40px;
+}
+.actionButton {
+  flex: 0 0 auto;
+  padding: 27px 40px;
+  background-color: #6fd6be; /* Темнее основного баннера */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 220px;
+
+  &:hover {
+    background-color: #37ebc1;
+  }
+}
+
+.listContainer {
+  flex: 1 1 auto;
+  padding: 0 20px;
+}
+
+.numberedList {
+  list-style-type: none;
+  counter-reset: step-counter;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+
+  li {
+    position: relative;
+    padding-left: 35px;
+    line-height: 1.5;
+    flex: 1 1 200px;
+    max-width: 300px;
+    margin-bottom: 15px;
+
+    &::before {
+      counter-increment: step-counter;
+      content: counter(step-counter) ".";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #8fd3c6;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+  }
+}
+
+.logoWrapper {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logoImage {
+  max-height: 120px;
+  width: auto;
+  object-fit: contain;
+}
+/* 4. Адаптивность */
 @media (max-width: 1600px) {
   .heroContent,
   .textContentFullWidth {
