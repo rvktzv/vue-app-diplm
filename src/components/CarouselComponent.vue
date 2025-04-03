@@ -115,5 +115,11 @@ const goToDetail = (id: number) => {
   }
 }
 
+.carouselContainer {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
 /* Остальные стили карусели... */
 </style>

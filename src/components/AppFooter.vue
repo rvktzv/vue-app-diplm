@@ -48,4 +48,9 @@
     text-decoration: underline;
   }
 }
+
+.appFooter {
+  width: 100%;
+  padding: 60px 0;
+}
 </style>

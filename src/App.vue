@@ -14,11 +14,24 @@
 .app {
   // Основные стили приложения
   min-height: 100vh;
-  display: flex;
+  display: block;
+  width: 90vw;
   flex-direction: column;
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
   color: #333;
   background-color: #f9f9f9;
+}
+/*
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}*/
+body, html, #app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 </style>
