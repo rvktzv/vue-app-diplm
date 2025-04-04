@@ -21,7 +21,8 @@
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
   color: #333;
-  background-color: #f9f9f9;
+  background-color: #edf1ed;
+
 }
 /*
 body {
@@ -34,5 +35,6 @@ body, html, #app {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+
 }
 </style>

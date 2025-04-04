@@ -198,7 +198,7 @@ showModal.value = false
 .actionButton {
   flex: 0 0 auto;
   padding: 27px 40px;
-  background-color: #6fd6be; /* Темнее основного баннера */
+  background-color: #6fd6be;
   color: white;
   border: none;
   border-radius: 8px;
