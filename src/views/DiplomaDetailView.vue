@@ -36,14 +36,7 @@
       </button>
 
       <!-- Лицензии -->
-       <!--
-      <div v-if="hasLicenses" :class="$style.licenses">
-        <h2 :class="$style.sectionTitle">Лицензии</h2>
-        <div v-for="(license, index) in visibleLicenses" :key="index" :class="$style.licenseItem">
-          {{ license }}
-        </div>
-      </div>
-    -->
+
     <div v-if="hasLicenses" :class="$style.licenses">
   <h2 :class="$style.sectionTitle">Лицензии</h2>
   <div v-for="(license, index) in visibleLicenses" :key="index" :class="$style.licenseItem">
@@ -122,7 +115,8 @@ const response = await axios.post(
       }
 
       // Проверка URL
-      const expectedSlug = `${data.inn}-${transliterate(response.data.suggestions[0].value)}`
+      const expectedSlug = `${data.inn}-${transliterateForUrl(suggestion.value)}`
+     // const expectedSlug = `${data.inn}-${transliterate(response.data.suggestions[0].value)}`
       if (route.params.id !== expectedSlug) {
         router.replace(`/diplomas/${expectedSlug}`)
       }
