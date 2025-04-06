@@ -1,6 +1,15 @@
 <template>
   <div :class="$style.carouselWrapper">
     <h2 :class="$style.sectionTitle">Готовые работы</h2>
+    <div>
+      <button
+        :class="$style.actionButton"
+        @click="showFilters()"
+
+      >Название кнопки какое-то
+        &lt;
+      </button>
+    </div>
     <div :class="$style.carouselContainer">
       <button
         :class="[$style.navButton, $style.prev]"
@@ -111,6 +120,11 @@ const showDetails = (item: Organization) => {
   router.push(`/diplomas/${slug}`)
 }
 
+const showFilters = () => {
+ // const slug = `${item.inn}-${transliterate(item.title)}`
+  router.push(`/diplomas/`)
+}
+
 const updateVisibleItems = () => {
   const width = window.innerWidth
   if (width < 576) visibleItems.value = 1
@@ -157,6 +171,25 @@ onMounted(() => {
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 60px;
+}
+
+.actionButton {
+  flex: 0 0 auto;
+  padding: 27px 40px;
+  background-color: #6fd6be;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 220px;
+
+  &:hover {
+    background-color: #37ebc1;
+  }
 }
 
 .loader {

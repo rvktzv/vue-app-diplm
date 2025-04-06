@@ -115,8 +115,8 @@ const response = await axios.post(
       }
 
       // Проверка URL
-      const expectedSlug = `${data.inn}-${transliterateForUrl(suggestion.value)}`
-     // const expectedSlug = `${data.inn}-${transliterate(response.data.suggestions[0].value)}`
+     // const expectedSlug = `${data.inn}-${transliterate(suggestion.value)}`
+      const expectedSlug = `${data.inn}-${transliterate(response.data.suggestions[0].value)}`
       if (route.params.id !== expectedSlug) {
         router.replace(`/diplomas/${expectedSlug}`)
       }

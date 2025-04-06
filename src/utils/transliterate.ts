@@ -5,5 +5,10 @@ export const transliterate = (str: string): string => {
   return str.split('').map(char => {
     const index = ru.indexOf(char)
     return index >= 0 ? en[index] : char
-  }).join('').replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').toLowerCase()
+  })
+  .join('')
+  .replace(/[^a-zA-Z0-9]/g, '-')
+  .replace(/-+/g, '-')
+  .replace(/^-|-$/g, '')
+  .toLowerCase()
 }
