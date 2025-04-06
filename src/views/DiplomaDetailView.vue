@@ -96,63 +96,12 @@ const showModal = ref(false)
 const { id } = defineProps<{
   id: string
 }>()
-/*
-const fetchOrganization = async (inn: string) => {
-  console.log('Fetching data for INN:', inn) // Логируем
-  try {
-    loading.value = true
-    const response = await axios.post(
-      '/suggestions/api/4_1/rs/findById/party',
-      { query: inn },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Token 30bfea4cdb9fd6d4032a70b93ad66924281164ac'
-        }
-      }
-    )
 
-    console.log('API Response:', response.data) // Логируем ответ
-
-    if (response.data.suggestions.length > 0) {
-      const data = response.data.suggestions[0].data
-      organization.value = data
-
-      // Проверка и корректировка URL
-      const expectedSlug = `${data.inn}-${transliterate(response.data.suggestions[0].value)}`
-      const currentSlug = route.params.id as string
-
-      if (currentSlug !== expectedSlug) {
-        router.replace(`/diplomas/${expectedSlug}`)
-      }
-    } else {
-      organization.value = null
-    }
-  } catch (error) {
-    console.error('Ошибка при загрузке организации:', error)
-    organization.value = null
-  } finally {
-    loading.value = false
-  }
-}*/
 const fetchOrganization = async (inn: string) => {
   try {
     loading.value = true
     console.log(`Отправка запроса для INN: ${inn}`)
-/*
-    const response = await axios.post(
-      'https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party',
-      { query: inn },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Token 30bfea4cdb9fd6d4032a70b93ad66924281164ac',
-          'Accept': 'application/json'
-        },
-        timeout: 5000
-      }
-    )
-*/
+
 const response = await axios.post(
   '/api/findById/party', // Теперь используем прокси
   { query: inn },
@@ -193,11 +142,7 @@ const response = await axios.post(
     loading.value = false
   }
 }
-/*
-const hasLicenses = computed(() => {
-  return organization.value?.licenses?.some(license => license.trim().length > 0) ?? false
-})
-*/
+
 const hasLicenses = computed(() => {
   return organization.value?.licenses?.some(license => {
     if (typeof license === 'string') {
@@ -206,11 +151,7 @@ const hasLicenses = computed(() => {
     return license && Object.keys(license).length > 0
   }) ?? false
 })
-/*
-const visibleLicenses = computed(() => {
-  return organization.value?.licenses?.filter(license => license.trim().length > 0).slice(0, 6) ?? []
-})
-*/
+
 const visibleLicenses = computed(() => {
   if (!organization.value?.licenses) return []
 
@@ -237,7 +178,7 @@ const closeModal = () => {
 }
 
 onMounted(() => {
- // const inn = parseOrganizationUrl(route.params.id as string)
+
  const inn = parseOrganizationUrl(id) // Используем переданный id
 
   if (inn) {
