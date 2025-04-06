@@ -1,11 +1,13 @@
 <template>
-  <div :class="$style.homePage">
+ <!-- <div :class="$style.homePage">-->
+    <div :class="$style.pageContainer">
+
     <!-- 1. Полноширинный баннер -->
     <section :class="$style.heroBanner">
       <div :class="$style.heroContent">
         <div :class="$style.textContent">
-          <h1>Профессиональное написание дипломных работ на заказ</h1>
-          <p>Качественные работы от экспертов с многолетним опытом. Гарантия уникальности и сроков.</p>
+          <h1>Zau4ka</h1>
+          <p>Твой надежный помощник в учебе!</p>
         </div>
         <div :class="$style.imagePlaceholder">
           <img
@@ -15,67 +17,27 @@
         </div>
       </div>
     </section>
-<!--
-     <div :class="$style.logoWrapper">
-        <img
-          src="@/assets/images/logo.png"
-          alt="Логотип компании"
-          :class="$style.logoImage"
-        >
-      </div>
-    -->
+
      <!-- 2. Блок текста -->
-     <section :class="$style.textBlock">
-      <div :class="$style.container">
-        <p>Наша компания специализируется на написании дипломных работ для студентов различных вузов.
-           Мы работаем с 2010 года и за это время помогли более чем 5000 студентов защитить свои дипломы
-            на отлично. Наши авторы - это преподаватели вузов, кандидаты и доктора наук, которые
-             знают все требования к оформлению и содержанию дипломных работ.
-            Наша компания специализируется на написании дипломных работ для студентов различных вузов.
-           Мы работаем с 2010 года и за это время помогли более чем 5000 студентов защитить свои дипломы
-            на отлично. Наши авторы - это преподаватели вузов, кандидаты и доктора наук, которые
-             знают все требования к оформлению и содержанию дипломных работ.</p>
-      </div>
-    </section>
+     <SEOHomeView />
 
-    <!-- 3. Блок с кнопкой, списком и лого
-    <section :class="$style.actionBlock">
-      <div :class="$style.container">
-        <div :class="$style.actionContent">
-          <button :class="$style.modalButton" @click="openModal">
-            Заказать диплом
-          </button>
 
-          <ol :class="$style.numberedList">
-            <li>Вы оставляете заявку с требованиями к работе</li>
-            <li>Мы подбираем подходящего автора-эксперта</li>
-            <li>Вы вносите предоплату 30% от суммы</li>
-            <li>Автор выполняет работу в указанный срок</li>
-            <li>Вы проверяете и оплачиваете оставшуюся сумму</li>
-          </ol>
-
-          <div :class="$style.logoContainer">
-            <img src="@/assets/images/logo.png" alt="Логотип компании" :class="$style.logo">
-          </div>
-        </div>
-      </div>
-    </section>
--->
+    <!-- 3. Блок с кнопкой, списком и лого-->
 <section :class="$style.actionBlock">
     <div :class="$style.actionContainer">
       <!-- 1. Кнопка -->
       <button :class="$style.actionButton" @click="openModal">
-        Заказать диплом
+        Сгенерировать работу
       </button>
 
       <!-- 2. Нумерованный список -->
       <div :class="$style.listContainer">
         <ol :class="$style.numberedList">
-          <li>Вы оставляете заявку с требованиями к работе</li>
-          <li>Мы подбираем подходящего автора-эксперта</li>
-          <li>Вы вносите предоплату 30% от суммы</li>
-          <li>Автор выполняет работу в указанный срок</li>
-          <li>Вы проверяете и оплачиваете оставшуюся сумму</li>
+          <li>Вы указываете тему и вашу специальность</li>
+          <li>Генерируете оглавление</li>
+          <li>Подтверждаете оглавление или добавляете свое</li>
+          <li>Генерируете полную работу</li>
+
         </ol>
       </div>
 
@@ -109,6 +71,7 @@ import { useDiplomaStore } from '@/stores/diploma'
 import CarouselComponent from '@/components/CarouselComponent.vue'
 import ModalForm from '@/components/ModalForm.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import SEOHomeView from '@/components/SEOHomeView.vue'
 
 const diplomaStore = useDiplomaStore()
 const diplomas = diplomaStore.featuredDiplomas
@@ -150,12 +113,14 @@ showModal.value = false
   }
 
   .textContent {
-    width: 90%;
-    padding-right: 40px;
+    width: 100%;
+    padding-right: 50px;
+
 
     h1 {
+
       font-size: 4rem;
-      margin-bottom: 30px;
+      margin-bottom: 70px;
     }
     p {
       font-size: 1.6rem;
@@ -164,15 +129,15 @@ showModal.value = false
 
   .imagePlaceholder {
     width: 100%;
-    background: rgba(white, 0.3);
+ //   background: rgba(white, 0.3);
   }
 }
 
 /* 2. Текст на всю ширину */
 .textBlock {
-  width: 100%;
+  width: 90%;
   padding: 80px 0;
-  background: white;
+ // background: white;
 
   .textContentFullWidth {
     width: 100%;
@@ -192,6 +157,126 @@ showModal.value = false
 }
 
 /* 3. Блок с кнопкой */
+/* 3. Блок с кнопкой - обновленная версия */
+.actionBlock {
+  width: 100%;
+  padding: 40px 0;
+  /* Убрали background-color */
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.actionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 40px;
+  gap: 40px;
+}
+
+.actionButton {
+  flex: 0 0 auto;
+  padding: 20px 35px;
+  background-color: #6fd6be;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 220px;
+
+  &:hover {
+    background-color: #37ebc1;
+  }
+}
+
+.listContainer {
+  flex: 3 1 auto;
+  padding: 0 20px;
+}
+
+.numberedList {
+  list-style-type: none;
+  counter-reset: step-counter;
+  /* Убрали flex-стили для вертикального списка */
+
+  li {
+    position: relative;
+    padding-left: 45px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+
+    &::before {
+      counter-increment: step-counter;
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #6fd6be;
+      font-weight: bold;
+      font-size: 1.4em;
+    }
+
+    /* Добавляем иконки перед пунктами */
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236fd6be"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>');
+      background-repeat: no-repeat;
+      margin-left: 10px;
+    }
+  }
+}
+
+.logoWrapper {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  /* Убрали background-color и box-shadow */
+}
+
+.logoImage {
+  max-height: 140px; /* Немного уменьшили размер */
+  width: auto;
+  object-fit: contain;
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 768px) {
+  .actionContainer {
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 20px;
+  }
+
+  .actionButton {
+    width: 100%;
+    order: 1;
+  }
+
+  .listContainer {
+    order: 2;
+    width: 100%;
+  }
+
+  .logoWrapper {
+    order: 3;
+    margin-top: 20px;
+  }
+}
+/*
 .actionBlock {
   width: 100%;
   padding: 60px 0;
@@ -229,20 +314,20 @@ showModal.value = false
 }
 
 .listContainer {
-  flex: 1 1 auto;
+  flex: 3 1 auto;
   padding: 0 20px;
 }
 
 .numberedList {
   list-style-type: none;
-  counter-reset: step-counter;
+//  counter-reset: step-counter;
   display: flex;
   flex-wrap: wrap;
   gap: 25px;
   justify-content: center;
 
   li {
-    position: relative;
+    position: center;
     padding-left: 35px;
     line-height: 1.5;
     flex: 1 1 200px;
@@ -257,7 +342,7 @@ showModal.value = false
       top: 0;
       color: #8fd3c6;
       font-weight: bold;
-      font-size: 1.1em;
+      font-size: 1.6em;
     }
   }
 }
@@ -268,7 +353,7 @@ showModal.value = false
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background-color: white;
+ // background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -278,6 +363,7 @@ showModal.value = false
   width: auto;
   object-fit: contain;
 }
+  */
 /* 4. Адаптивность */
 @media (max-width: 1600px) {
   .heroContent,
@@ -288,7 +374,7 @@ showModal.value = false
 
 @media (max-width: 1600px) {
   .heroBanner {
-    padding: 80px 0;
+    padding: 0px 0;
 
     .textContent {
       h1 { font-size: 2.5rem; }
