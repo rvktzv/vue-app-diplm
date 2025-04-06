@@ -62,7 +62,7 @@
 import { ref } from 'vue'
 import { useDiplomaStore } from '@/stores/diploma'
 import CarouselComponent from '@/components/CarouselComponent.vue'
-import ModalForm from '@/components/ModalForm.vue'
+//import ModalForm from '@/components/ModalForm.vue'
 import AppFooter from '@/components/AppFooter.vue'
 
 const diplomaStore = useDiplomaStore()
