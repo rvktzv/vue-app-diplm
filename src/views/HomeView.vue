@@ -7,10 +7,23 @@
           <h1>Профессиональное написание дипломных работ на заказ</h1>
           <p>Качественные работы от экспертов с многолетним опытом. Гарантия уникальности и сроков.</p>
         </div>
-        <div :class="$style.imagePlaceholder"></div>
+        <div :class="$style.imagePlaceholder">
+          <img
+          src="@/assets/images/placeholder-banner.png"
+          :class="$style.imagePlaceholder"
+        >
+        </div>
       </div>
     </section>
-
+<!--
+     <div :class="$style.logoWrapper">
+        <img
+          src="@/assets/images/logo.png"
+          alt="Логотип компании"
+          :class="$style.logoImage"
+        >
+      </div>
+    -->
      <!-- 2. Блок текста -->
      <section :class="$style.textBlock">
       <div :class="$style.container">
@@ -77,7 +90,7 @@
     </div>
   </section>
 <!-- 4. Заголовок -->
-<h2 :class="$style.sectionTitle">Примеры наших работ</h2>
+<!--<h2 :class="$style.sectionTitle">Примеры наших работ</h2>-->
 
 <!-- 5. Карусель -->
 <CarouselComponent :items="diplomas" />
@@ -125,6 +138,7 @@ showModal.value = false
 .heroBanner {
   background-color: #b1e2d3;
   padding: 100px 0;
+  border-radius: 10px;
   width: 100%;
 
   .heroContent {
@@ -132,24 +146,24 @@ showModal.value = false
     width: 100%;
     max-width: 1600px;
     margin: 0 auto;
-    padding: 0 20px;
+  //  padding: 0 20px;
   }
 
   .textContent {
-    width: 80%;
+    width: 90%;
     padding-right: 40px;
 
     h1 {
-      font-size: 3rem;
+      font-size: 4rem;
       margin-bottom: 30px;
     }
     p {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
     }
   }
 
   .imagePlaceholder {
-    width: 40%;
+    width: 100%;
     background: rgba(white, 0.3);
   }
 }

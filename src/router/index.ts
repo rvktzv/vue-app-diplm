@@ -17,9 +17,16 @@ const router = createRouter({
       component: DiplomaListView
     },
     {
-      path: '/diploma/:id',
+      path: '/diplomas/:id(\\d+-[a-z0-9-]+)', // Более точное regex-выражение
       name: 'diploma-detail',
-      component: DiplomaDetailView
+      component: () => import('@/views/DiplomaDetailView.vue'),
+      //props: (route) => ({ id: route.params.id }) // Передаем id как prop
+      props: true
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('@/views/NotFoundView.vue')
     }
   ]
 })

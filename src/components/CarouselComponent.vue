@@ -1,62 +1,115 @@
 <template>
-  <div :class="$style.carouselContainer">
-    <button
-      :class="[$style.navButton, $style.prev]"
-      @click="prevSlide"
-      :disabled="currentIndex === 0"
-    >
-      &lt;
-    </button>
-
-    <div :class="$style.carouselTrack" :style="trackStyle">
-      <div
-        v-for="(item, index) in items"
-        :key="index"
-        :class="$style.carouselItem"
+  <div :class="$style.carouselWrapper">
+    <h2 :class="$style.sectionTitle">Готовые работы</h2>
+    <div :class="$style.carouselContainer">
+      <button
+        :class="[$style.navButton, $style.prev]"
+        @click="prevSlide"
+        :disabled="currentIndex === 0"
       >
-        <h3>{{ item.title }}</h3>
-        <p>{{ item.description }}</p>
-        <button
-          :class="$style.detailButton"
-          @click="goToDetail(item.id)"
-        >
-          Подробнее
-        </button>
-      </div>
-    </div>
+        &lt;
+      </button>
 
-    <button
-      :class="[$style.navButton, $style.next]"
-      @click="nextSlide"
-      :disabled="currentIndex >= items.length - visibleItems"
-    >
-      &gt;
-    </button>
+      <div v-if="loading" :class="$style.loader">Загрузка...</div>
+
+      <div v-else :class="$style.carouselTrack" :style="trackStyle">
+        <div
+          v-for="(item, index) in items"
+          :key="index"
+          :class="$style.carouselItem"
+        >
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+          <button
+            :class="$style.detailsButton"
+            @click="showDetails(item)"
+          >
+            Подробнее
+          </button>
+        </div>
+      </div>
+
+      <button
+        :class="[$style.navButton, $style.next]"
+        @click="nextSlide"
+        :disabled="currentIndex >= items.length - visibleItems || loading"
+      >
+        &gt;
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { transliterate } from '@/utils/transliterate'
+import { ref, computed, onMounted } from 'vue'
+import router from '@/router/index.ts'
 
-interface CarouselItem {
-  id: number
+interface Organization {
   title: string
   description: string
+  inn: string
+  address: string
+  originalData: any
 }
 
-const props = defineProps<{
-  items: CarouselItem[]
-}>()
-
-const router = useRouter()
+const items = ref<Organization[]>([])
+const loading = ref(true)
 const currentIndex = ref(0)
-const itemWidth = 280
+const itemWidth = 300
 const visibleItems = ref(4)
 
 const trackStyle = computed(() => ({
   transform: `translateX(-${currentIndex.value * itemWidth}px)`
 }))
+
+const fetchOrganizations = async () => {
+  try {
+    loading.value = true
+    const response = await fetch('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token 30bfea4cdb9fd6d4032a70b93ad66924281164ac'
+      },
+      body: JSON.stringify({
+        query: "сбербанк",
+        status: ["ACTIVE"],
+        count: 8 // Получаем 8 организаций для карусели
+      })
+    })
+
+    const data = await response.json()
+
+    items.value = data.suggestions.map((suggestion: any) => ({
+      title: suggestion.unrestricted_value,
+      description: `${suggestion.data.address.value}, ИНН: ${suggestion.data.inn}`,
+      inn: suggestion.data.inn,
+      address: suggestion.data.address.value,
+      originalData: suggestion.data
+    }))
+
+  } catch (error) {
+    console.error('Ошибка при загрузке данных:', error)
+    // Fallback данные на случай ошибки
+    items.value = [
+      {
+        title: "ПАО СБЕРБАНК",
+        description: "г Москва, ул Вавилова, д 19, ИНН: 7707083893",
+        inn: "7707083893",
+        address: "г Москва, ул Вавилова, д 19",
+        originalData: {}
+      }
+    ]
+  } finally {
+    loading.value = false
+  }
+}
+
+const showDetails = (item: Organization) => {
+  const slug = `${item.inn}-${transliterate(item.title)}`
+  router.push(`/diplomas/${slug}`)
+}
 
 const updateVisibleItems = () => {
   const width = window.innerWidth
@@ -66,11 +119,8 @@ const updateVisibleItems = () => {
   else visibleItems.value = 4
 }
 
-window.addEventListener('resize', updateVisibleItems)
-updateVisibleItems()
-
 const nextSlide = () => {
-  if (currentIndex.value < props.items.length - visibleItems.value) {
+  if (currentIndex.value < items.value.length - visibleItems.value) {
     currentIndex.value++
   }
 }
@@ -81,45 +131,138 @@ const prevSlide = () => {
   }
 }
 
-const goToDetail = (id: number) => {
-  // TODO: Заменить на реальный вызов API
-  router.push(`/diploma/${id}`)
-}
+onMounted(() => {
+  fetchOrganizations()
+  window.addEventListener('resize', updateVisibleItems)
+  updateVisibleItems()
+})
 </script>
 
 <style module lang="scss">
+.carouselWrapper {
+  width: 100%;
+  padding: 60px 0;
+  background: white;
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2rem;
+  color: #2c3e50;
+}
+
 .carouselContainer {
   position: relative;
-  margin: 40px 0;
-  overflow: hidden;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+.loader {
+  text-align: center;
+  padding: 60px 0;
+  font-size: 1.2rem;
+  color: #666;
 }
 
 .carouselTrack {
   display: flex;
   transition: transform 0.5s ease;
-  padding: 20px 0;
+  gap: 20px;
+  padding: 10px 0;
 }
 
 .carouselItem {
   flex: 0 0 280px;
-  margin: 0 10px;
-  padding: 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: box-shadow 0.3s;
+  padding: 25px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
 
   &:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    min-height: 3em;
+  }
+
+  p {
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
   }
 }
 
-.carouselContainer {
+.detailsButton {
   width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 20px;
+  padding: 12px;
+  background: #8fd3c6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  &:hover {
+    background: #7abfaf;
+  }
 }
-/* Остальные стили карусели... */
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: #8fd3c6;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s;
+
+  &:hover:not(:disabled) {
+    background: #7abfaf;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+@media (max-width: 1200px) {
+  .carouselContainer {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carouselContainer {
+    padding: 0 20px;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+  }
+}
 </style>
