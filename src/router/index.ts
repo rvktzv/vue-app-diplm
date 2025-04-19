@@ -11,10 +11,15 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
-    {
+   /* {
       path: '/diplomas',
       name: 'diplomas',
       component: DiplomaListView
+    },*/
+    {
+      path: '/diplomas',
+      name: 'Diplomas',
+      component: () => import('../views/DiplomaListView.vue')
     },
     {
       path: '/diplomas/:id(\\d+-[a-z0-9-]+)', // Более точное regex-выражение
