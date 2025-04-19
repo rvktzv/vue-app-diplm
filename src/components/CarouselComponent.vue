@@ -79,7 +79,7 @@ const fetchOrganizations = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-     /*   'Authorization': 'Token 30bfea4cdb9fd6d4032a70b93ad66924281164ac'*/
+        'Authorization': 'Token 30bfea4cdb9fd6d4032a70b93ad66924281164ac'
       },
       body: JSON.stringify({
         query: "сбербанк",
